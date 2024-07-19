@@ -11,7 +11,7 @@ st.write(
 )
 
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-st.text(fruityvice_response.json())
+st.dataframe(data=fruityvice_response.json(), use_container_width=True)
 
 name_on_order = st.text_input('Name of Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
