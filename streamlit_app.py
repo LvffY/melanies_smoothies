@@ -10,9 +10,6 @@ st.write(
     """
 )
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-st.dataframe(data=fruityvice_response.json(), use_container_width=True)
-
 name_on_order = st.text_input('Name of Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
 
@@ -21,8 +18,12 @@ st.write('The name on your Smoothie will be:', name_on_order)
 # For SniS app
 cnx = st.connection("snowflake")
 session = cnx.session()
+
+# Get data from snowflake
 my_dataframe = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"))
-# st.dataframe(data=my_dataframe, use_container_width=True)
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
 
 ingredients_list = st.multiselect('Choose up to 5 ingredients', my_dataframe, max_selections=5)
 
